@@ -1,0 +1,158 @@
+@startuml
+node "RaspiOH3" {
+  package "p_MQTT" {
+    component mosquitto #green
+    interface MQTT_1883 #green
+
+    MQTT_1883 - [mosquitto]
+  }
+
+  package "p_OH" {
+    component OH3 #pink
+    interface HTTP_8080 #pink
+    interface REST_OH #pink
+    interface XML_RPC_9125 #pink
+    interface BIN_RPC_9126 #pink
+
+    [OH3]-up-> HTTP_8080
+    [OH3]-up-> REST_OH
+    [OH3]-down-> XML_RPC_9125
+    [OH3]-down-> BIN_RPC_9126
+    [OH3] ..> () MQTT_1883 : use
+  }
+
+  package "p_Tinkerforge" {
+    component Tinkerforge #blue
+    component Tinkerforge_Device1 #blue
+    component Tinkerforge_Device2 #blue
+    interface USB #blue
+
+    Tinkerforge -up-> USB
+    Tinkerforge ..> () MQTT_1883 : use
+    Tinkerforge ..> () REST_OH : use
+
+    Tinkerforge_Device1 ..> () USB : use
+    Tinkerforge_Device2 ..> () USB : use
+  }
+
+  database "InfluxDB" {
+    frame "obenhab" {
+      [OpenhabDB]
+    }
+  }
+
+}
+
+cloud {
+  node "c_MyOpenhab" {
+    component myOpenHAB #lightblue
+    interface HTTP_OH #lightblue
+
+    HTTP_OH - [myOpenHAB]
+    [myOpenHAB] ..> () HTTP_8080 : use
+  }
+
+  node "c_HueCloud" {
+    component "HueCloud" #lightblue
+    interface HTTP_Hue #lightblue
+
+    HTTP_Hue - [HueCloud]
+    [HueCloud] ..> () HTTP_OH : use
+  }
+
+  node "c_IKEACloud" {
+    component "IKEACloud" #lightblue
+    interface HTTP_IKEA #lightblue
+
+    HTTP_IKEA - [IKEACloud]
+    [IKEACloud] ..> () HTTP_OH : use
+  }
+
+  node "c_GoogleAssistant" {
+    component "GoogleAssistant" #lightblue
+
+    [GoogleAssistant] ..> () HTTP_OH : use
+  }
+
+  node "c_Alexa" {
+    component "Alexa" #lightblue
+
+    [Alexa] ..> () HTTP_OH : use
+  }
+}
+
+node "n_Mobile" {
+  package "p_Mobile" {
+    component MobileApp #brown
+
+    [MobileApp] ..> () HTTP_8080 : use local
+    [MobileApp] ..> () HTTP_OH : use local
+  }
+}
+
+package "p_Hue" {
+  node "n_HueBridge" {
+    component HueBridge  #orange
+    interface zigbee_hue #orange
+    interface REST_hue #orange
+
+    [HueBridge] -up-> zigbee_hue
+    [HueBridge] --> REST_hue
+  }
+
+  component HueDevice1 #orange
+  component HueDevice2 #orange
+  component LedvanceDevice1 #orange
+  component PaulmannDevice1 #orange
+
+  [HueDevice1] ..> () zigbee_hue : use
+  [HueDevice2] ..> () zigbee_hue : use
+  [LedvanceDevice1] ..> () zigbee_hue : use
+  [PaulmannDevice1] ..> () zigbee_hue : use
+
+  [HueBridge] ..> () HTTP_Hue : use
+}
+
+package "p_IKEA" {
+  node "n_IKEABridge" {
+    component IKEABridge  #yellow
+    interface zigbee_IKEA #yellow
+
+    [IKEABridge] -up-> zigbee_IKEA
+    [IKEABridge] ..> () HTTP_IKEA : use
+  }
+
+  component IKEADevice1 #yellow
+  component IKEADevice2 #yellow
+
+  [IKEADevice1] ..> () zigbee_IKEA : use
+  [IKEADevice2] ..> () zigbee_IKEA : use
+}
+
+package "p_Homematic" {
+  node "n_Homematic" {
+    component RaspiMatic #lightgreen
+    interface HmIP #lightgreen
+    interface HTTP_2010 #lightgreen
+
+    RaspiMatic -up-> HmIP
+    RaspiMatic -left-> HTTP_2010
+    RaspiMatic ..> () XML_RPC_9125 : use
+    RaspiMatic ..> () BIN_RPC_9126 : use
+
+    OH3 ..> () HTTP_2010 : use
+  }
+
+  component HmIPDevice1 #lightgreen
+  component HmIPDevice2 #lightgreen
+
+  [HmIPDevice1] ..> () HmIP : use
+  [HmIPDevice2] ..> () HmIP : use
+}
+
+[OH3] -down-> [OpenhabDB]
+[OH3] ..> () REST_hue : use
+
+[myOpenHAB] ..> () HTTP_Hue : use
+[myOpenHAB] ..> () HTTP_IKEA : use
+@enduml
