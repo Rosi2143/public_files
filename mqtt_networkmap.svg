@@ -1,0 +1,32 @@
+<details> 
+<summary></summary>
+zigbee_networkmap
+digraph G {
+node[shape=record];
+  "0x00124b001949d694" [style="bold, filled", fillcolor="#e04e5d", fontcolor="#ffffff", label="{Coordinator|0x00124b001949d694 (0x0000)|0 seconds ago}"];
+  "0x00124b001949d694" -> "0x000d6ffffe62dab9" [penwidth=0.5, weight=0, color="#994444", label="138"]
+  "0x00124b001949d694" -> "0x14b457fffe43aa7b" [penwidth=0.5, weight=0, color="#994444", label="102"]
+  "0x00124b001949d694" -> "0x14b457fffe40fe5d" [penwidth=0.5, weight=0, color="#994444", label="106"]
+  "0x000d6ffffe4b1c65" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{IKEA/FernBedienung/Schlafzimmer|0x000d6ffffe4b1c65 (0xedc0)|IKEA TRADFRI remote control (E1524/E1810)|52 seconds ago}"];
+  "0x000d6ffffe4b1c65" -> "0x14b457fffe40fe5d" [penwidth=1, weight=0, color="#994444", label="164"]
+  "0xbc33acfffe27ccf2" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{IKEA/BewegungsMelder/Buero|0xbc33acfffe27ccf2 (0x39a9)|IKEA TRADFRI motion sensor (E1525/E1745)|10 minutes, 19 seconds ago}"];
+  "0xbc33acfffe27ccf2" -> "0x00124b001949d694" [penwidth=1, weight=0, color="#994444", label="102"]
+  "0x0c4314fffef8c1e9" [style="rounded, dashed, filled", fillcolor="#fff8ce", fontcolor="#000000", label="{IKEA/BewegungsMelder/Gast|0x0c4314fffef8c1e9 (0xdf0d)|IKEA TRADFRI motion sensor (E1525/E1745)|15 minutes, 4 seconds ago}"];
+  "0x0c4314fffef8c1e9" -> "0x00124b001949d694" [penwidth=1, weight=0, color="#994444", label="39"]
+  "0xcc86ecfffe1ef7f0" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{IKEA/SignalVerstarker|0xcc86ecfffe1ef7f0 (0x583f)failed: lqi,routingTable|IKEA TRADFRI signal repeater (E1746)|9 minutes, 27 seconds ago}"];
+  "0xcc86ecfffe1ef7f0" -> "0x00124b001949d694" [penwidth=0.5, weight=0, color="#994444", label="0"]
+  "0x000d6ffffe62dab9" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{IKEA/Lampe/Schlafzimmer1|0x000d6ffffe62dab9 (0xd427)|IKEA TRADFRI LED bulb E27 1000 lumen, dimmable, white spectrum, opal white (LED1732G11)|4 minutes, 56 seconds ago}"];
+  "0x000d6ffffe62dab9" -> "0x00124b001949d694" [penwidth=0.5, weight=0, color="#994444", label="63"]
+  "0x000d6ffffe62dab9" -> "0x14b457fffe43aa7b" [penwidth=0.5, weight=0, color="#994444", label="246"]
+  "0x000d6ffffe62dab9" -> "0x14b457fffe40fe5d" [penwidth=2, weight=1, color="#009900", label="254 (routes: 0xd427)"]
+  "0x14b457fffe43aa7b" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{IKEA/Lampe/Schlafzimmer2|0x14b457fffe43aa7b (0xac00)|IKEA TRADFRI LED bulb E14 600 lumen, dimmable, white spectrum, opal white (LED1733G7)|6 minutes, 33 seconds ago}"];
+  "0x14b457fffe43aa7b" -> "0x00124b001949d694" [penwidth=0.5, weight=0, color="#994444", label="43"]
+  "0x14b457fffe43aa7b" -> "0x000d6ffffe62dab9" [penwidth=0.5, weight=0, color="#994444", label="252"]
+  "0x14b457fffe43aa7b" -> "0x14b457fffe40fe5d" [penwidth=2, weight=1, color="#009900", label="241 (routes: 0xac00)"]
+  "0x14b457fffe40fe5d" [style="rounded, filled", fillcolor="#4ea3e0", fontcolor="#ffffff", label="{IKEA/Lampe/Schlafzimmer3|0x14b457fffe40fe5d (0xa702)|IKEA TRADFRI LED bulb E14 600 lumen, dimmable, white spectrum, opal white (LED1733G7)|5 minutes, 21 seconds ago}"];
+  "0x14b457fffe40fe5d" -> "0x00124b001949d694" [penwidth=2, weight=1, color="#009900", label="43 (routes: 0xac00,0xd427)"]
+  "0x14b457fffe40fe5d" -> "0x000d6ffffe62dab9" [penwidth=0.5, weight=0, color="#994444", label="254"]
+  "0x14b457fffe40fe5d" -> "0x14b457fffe43aa7b" [penwidth=0.5, weight=0, color="#994444", label="241"]
+}
+zigbee_networkmap
+</details>
