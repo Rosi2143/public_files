@@ -10,8 +10,11 @@ state Yellow #yellow
 state White #white
 state Black #darkgrey
 
+Black -right-> White : none
+Black -left-> Torquoise : none
+
 [*] -[#green]-> Green
-Green --> Black : evTimeout
+Green -[#black]-> Black : evTimeout
 
 Root -[#red]-> Red : evLockFailDoorOpen
 Red -[#violet]-> Violet : evLockOK [WindowOpen]
