@@ -1,4 +1,4 @@
- @startuml
+@startuml
 state Root{
 
 state Green #lightgreen
@@ -8,8 +8,10 @@ state Red #red
 state Violet #violet
 state Yellow #yellow
 state White #white
+state Black #darkgrey
 
 [*] -[#green]-> Green
+Green --> Black : evTimeout
 
 Root -[#red]-> Red : evLockFailDoorOpen
 Red -[#violet]-> Violet : evLockOK [WindowOpen]
@@ -24,11 +26,11 @@ Root -[#blue]-> Blue : evDoorOpen
 Blue -[#violet]-> Violet : evDoorClosed [WindowOpen]
 Blue -[#green]->  Green  : evDoorClosed
 
-Root --> White : evBellRing
-White -[#red]->    Red    : evRingTimeout [LockError]
-White -[#blue]->   Blue   : evRingTimeout [DoorOpen]
-White -[#violet]-> Violet : evRingTimeout [WindowOpen]
-White -[#green]->  Green : evRingTimeout
+Root -[#yellow]-> Yellow : evBellRing
+Yellow -[#red]->    Red    : evRingTimeout [LockError]
+Yellow -[#blue]->   Blue   : evRingTimeout [DoorOpen]
+Yellow -[#violet]-> Violet : evRingTimeout [WindowOpen]
+Yellow -[#green]->  Green : evRingTimeout
 
 }
 @enduml
