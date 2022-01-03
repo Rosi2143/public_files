@@ -1,14 +1,14 @@
 @startuml
 state Root{
 
-state Green #lightgreen
-state Blue #blue
+state Green #lightgreen : All OK
+state Blue #blue : : Door Open
 state Torquoise #30D5C8
-state Red #red
-state Violet #violet
-state Yellow #yellow
+state Red #red : DoorLockFailed
+state Violet #violet : WindowOpem
+state Yellow #yellow : BellRing
 state White #white
-state Black #darkgrey
+state Black #darkgrey : OFF
 
 Black -right-> White : none
 Black -left-> Torquoise : none
