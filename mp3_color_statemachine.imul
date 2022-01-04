@@ -9,31 +9,30 @@ state Violet #violet : WindowOpem
 state Yellow #yellow : BellRing
 state White #white
 state Black #darkgrey : OFF
+state join_state <<join>>
 
 Black -right-> White : none
 Black -left-> Torquoise : none
 
-[*] -[#green]-> Green
+[*] -d[#green]-> Green
 Green -[#black]-> Black : evTimeout
 
-Root -[#red]-> Red : evLockFailDoorOpen
-Red -[#violet]-> Violet : evLockOK [WindowOpen]
-Red -[#blue]->   Blue   : evLockOK [DoorOpen]
-Red -[#green]->  Green  : evLockOK
+Root -d[#red]->   Red        : evLockFailDoorOpen
+Red  -[#black]-> join_state : evLockOK
 
-Root -[#violet]-> Violet : evWindowOpen
-Violet -[#blue]->  Blue  : evWindowClosed [DoorOpen]
-Violet -[#green]-> Green : evWindowClosed
+Root   -d[#yellow]-> Yellow    : evBellRing\n[stateDoorOK]
+Yellow -[#black]->  join_state: evRingTimeout
 
-Root -[#blue]-> Blue : evDoorOpen
-Blue -[#violet]-> Violet : evDoorClosed [WindowOpen]
-Blue -[#green]->  Green  : evDoorClosed
+Root   -d[#violet]-> Violet     : evWindowOpen\n[stateDoorOK&&stateNoBell]
+Violet -[#black]->  join_state : evWindowClosed
 
-Root -[#yellow]-> Yellow : evBellRing
-Yellow -[#red]->    Red    : evRingTimeout [LockError]
-Yellow -[#blue]->   Blue   : evRingTimeout [DoorOpen]
-Yellow -[#violet]-> Violet : evRingTimeout [WindowOpen]
-Yellow -[#green]->  Green : evRingTimeout
+Root -d[#blue]->   Blue       : evDoorOpen\n[stateDoorOK&&stateNoBell&&stateWindowClosed]
+Blue -[#black]->  join_state : evDoorClosed
 
+join_state -[#red]->    Red    : (1)\nstateLockFailDoorOpen
+join_state -[#yellow]-> Yellow : (2)\nstateBellRing
+join_state -[#blue]->   Blue   : (3)\nstateDoorOpen
+join_state -[#violet]-> Violet : (4)\nstateWindowOpen
+join_state -[#green]->  Green
 }
 @enduml
