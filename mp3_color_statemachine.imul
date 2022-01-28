@@ -2,13 +2,13 @@
 state Root{
 
 state Green #lightgreen : All OK
-state Blue #blue : : Door Open
-state Torquoise #30D5C8
-state Red #red : DoorLockFailed
-state Violet #violet : WindowOpem
-state Yellow #yellow : BellRing
-state White #white
-state Black #darkgrey : OFF
+state Red #red          : DoorLock Failed
+state Violet #violet    : Door Open
+state Blue #blue        : Window Open
+state Yellow #yellow    : Bell Ring
+state Torquoise #30D5C8 : None
+state White #white      : None
+state Black #darkgrey   : OFF
 state join_state <<join>>
 
 Black -right-> White : none
@@ -17,22 +17,24 @@ Black -left-> Torquoise : none
 [*] -d[#green]-> Green
 Green -[#black]-> Black : evTimeout
 
-Root -d[#red]->   Red        : evLockFailDoorOpen
+Root -d[#red]->   Red       : evLockFailDoorOpen
 Red  -[#black]-> join_state : evLockOK
 
 Root   -d[#yellow]-> Yellow    : evBellRing\n[stateDoorOK]
-Yellow -[#black]->  join_state: evRingTimeout
+Yellow -[#black]->  join_state : evRingTimeout
 
-Root   -d[#violet]-> Violet     : evWindowOpen\n[stateDoorOK&&stateNoBell]
-Violet -[#black]->  join_state : evWindowClosed
+Root   -d[#violet]-> Violet     : evDoorOpen\n[stateDoorOK&&stateNoBell]
+Violet -[#black]->   join_state : evDoorClosed
 
-Root -d[#blue]->   Blue       : evDoorOpen\n[stateDoorOK&&stateNoBell&&stateWindowClosed]
-Blue -[#black]->  join_state : evDoorClosed
+Root -d[#blue]->  Blue       : evWindowOpen\n[stateDoorOK&&stateNoBell&&stateDoorClosed]
+Blue -[#black]->  join_state : evWindowClosed
+
+Root -d[#green]->  Green : *\n[stateDoorOK&&stateNoBell&&stateDoorClosed&&stateWindowClosed]
 
 join_state -[#red]->    Red    : (1)\nstateLockFailDoorOpen
 join_state -[#yellow]-> Yellow : (2)\nstateBellRing
-join_state -[#blue]->   Blue   : (3)\nstateDoorOpen
-join_state -[#violet]-> Violet : (4)\nstateWindowOpen
+join_state -[#violet]-> Violet : (3)\nstateDoorOpen
+join_state -[#blue]->   Blue   : (4)\nstateWindowOpen
 join_state -[#green]->  Green
 }
 @enduml
